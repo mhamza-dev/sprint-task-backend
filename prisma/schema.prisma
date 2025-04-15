@@ -1,0 +1,120 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum TokenType {
+  ACCESS
+  REFRESH
+  OTP
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+model User {
+  id             String         @id @default(auto()) @map("_id") @db.ObjectId
+  email          String         @unique
+  password       String
+  username       String
+  userTokens     UserToken[]
+  userTasks      UserTask[]
+  userCategories UserCategory[]
+  userFlags      UserFlag[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+model UserToken {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String    @db.ObjectId
+  user      User      @relation(fields: [userId], references: [id])
+  token     String    @unique
+  type      TokenType @default(ACCESS)
+  expires   DateTime
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Task {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  status      TaskStatus @default(TODO)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  userTasks   UserTask[] // Renamed from userTask to userTasks for consistency
+  categoryId  String     @db.ObjectId
+  category    Category   @relation(fields: [categoryId], references: [id])
+}
+
+model Category {
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  backgroundColor String
+  icon            String
+  isDefault       Boolean        @default(false)
+  tasks           Task[]
+  userCategories  UserCategory[]
+}
+
+model UserCategory {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String   @db.ObjectId
+  user       User     @relation(fields: [userId], references: [id])
+  categoryId String   @db.ObjectId
+  category   Category @relation(fields: [categoryId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([userId, categoryId])
+}
+
+model UserTask {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+  taskId    String   @db.ObjectId
+  task      Task     @relation(fields: [taskId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, taskId]) // Added to prevent duplicate user-task associations
+}
+
+model Flag {
+  id              String     @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  backgroundColor String
+  icon            String
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  userFlags       UserFlag[]
+}
+
+model UserFlag {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+  flagId    String   @db.ObjectId
+  flag      Flag     @relation(fields: [flagId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Video {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  url       String
+  filename  String
+  createdAt DateTime @default(now())
+}

@@ -1,0 +1,585 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word'
+    xmlns:v='urn:schemas-microsoft-com:vml' xmlns='urn:w3-org-ns:HTML'>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Future Features</title>
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:TargetScreenSize>1024x640</o:TargetScreenSize>
+            <o:PixelsPerInch>72</o:PixelsPerInch>
+            <o:AllowPNG/>
+        </o:OfficeDocumentSettings>
+        <w:WordDocument>
+            <w:View>Print</w:View>
+            <w:Zoom>90</w:Zoom>
+            <w:DoNotOptimizeForBrowser/>
+        </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>
+        @page Section1 {
+            size: 8.5in 11.0in;
+            margin: 1.0in;
+            mso-header-margin: .5in;
+            mso-footer-margin: .5in;
+            mso-paper-source: 0;
+        }
+
+        table {
+            border: solid 1px;
+            border-collapse: collapse;
+        }
+
+        table td,
+        table th {
+            border: solid 1px;
+            padding: 5px;
+        }
+
+        td {
+            page-break-inside: avoid;
+        }
+
+        tr {
+            page-break-after: avoid;
+        }
+
+        div.Section1 {
+            page: Section1;
+        }
+
+        /* Confluence print stylesheet. Common to all themes for print medi=
+a */
+        /* Full of !important until we improve batching for print CSS */
+
+        @media print {
+            #main {
+                padding-bottom: 1em !important;
+                /* The default padding of 6em is to=
+o much for printouts */
+            }
+
+            body {
+                font: var(--ds-font-body-small, Arial, Helvetica, FreeSans, sans-serif);
+            }
+
+            body,
+            #full-height-container,
+            #main,
+            #page,
+            #content,
+            .has-personal-sidebar #content {
+                background: var(--ds-surface, #fff) !important;
+                color: var(--ds-text, #000) !important;
+                border: 0 !important;
+                width: 100% !important;
+                height: auto !important;
+                min-height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                display: block !important;
+            }
+
+            a,
+            a:link,
+            a:visited,
+            a:focus,
+            a:hover,
+            a:active {
+                color: var(--ds-text, #000);
+            }
+
+            #content h1,
+            #content h2,
+            #content h3,
+            #content h4,
+            #content h5,
+            #content h6 {
+                page-break-after: avoid;
+            }
+
+            pre {
+                font: var(--ds-font-code, Monaco, "Courier New", monospace);
+            }
+
+            #header,
+            .aui-header-inner,
+            #navigation,
+            #sidebar,
+            .sidebar,
+            #personal-info-sidebar,
+            .ia-fixed-sidebar,
+            .page-actions,
+            .navmenu,
+            .ajs-menu-bar,
+            .noprint,
+            .inline-control-link,
+            .inline-control-link a,
+            a.show-labels-editor,
+            .global-comment-actions,
+            .comment-actions,
+            .quick-comment-container,
+            #addcomment {
+                display: none !important;
+            }
+
+            /* CONF-28544 cannot print multiple pages in IE */
+            #splitter-content {
+                position: relative !important;
+            }
+
+            .comment .date::before {
+                content: none !important;
+                /* remove middot for print view */
+            }
+
+            h1.pagetitle img {
+                height: auto;
+                width: auto;
+            }
+
+            .print-only {
+                display: block;
+            }
+
+            #footer {
+                position: relative !important;
+                /* CONF-17506 Place the footer at end of the content */
+                margin: 0;
+                padding: 0;
+                background: none;
+                clear: both;
+            }
+
+            #poweredby {
+                border-top: none;
+                background: none;
+            }
+
+            #poweredby li.print-only {
+                display: list-item;
+                font-style: italic;
+            }
+
+            #poweredby li.noprint {
+                display: none;
+            }
+
+            /* no width controls in print */
+            .wiki-content .table-wrap,
+            .wiki-content p,
+            .panel .codeContent,
+            .panel .codeContent pre,
+            .image-wrap {
+                overflow: visible !important;
+            }
+
+            /* TODO - should this work? */
+            #children-section,
+            #comments-section .comment,
+            #comments-section .comment .comment-body,
+            #comments-section .comment .comment-content,
+            #comments-section .comment p {
+                page-break-inside: avoid;
+            }
+
+            #page-children a {
+                text-decoration: none;
+            }
+
+            /**
+     hide twixies
+
+     the specificity here is a hack because print styles
+     are getting loaded before the base styles. */
+            #comments-section.pageSection .section-header,
+            #comments-section.pageSection .section-title,
+            #children-section.pageSection .section-header,
+            #children-section.pageSection .section-title,
+            .children-show-hide {
+                padding-left: 0;
+                margin-left: 0;
+            }
+
+            .children-show-hide.icon {
+                display: none;
+            }
+
+            /* personal sidebar */
+            .has-personal-sidebar #content {
+                margin-right: 0px;
+            }
+
+            .has-personal-sidebar #content .pageSection {
+                margin-right: 0px;
+            }
+
+            .no-print,
+            .no-print * {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Future Features</h1>
+    <div class="Section1">
+        <h2 id="FutureFeatures-MVP">MVP</h2>
+        <h4 id="FutureFeatures-Features">Features:</h4>
+        <ol start="1">
+            <li>
+                <p><strong>SignUp</strong></p>
+                <ol start="1">
+                    <li>
+                        <p>A user is able to sign up to the application using email/password or third party login</p>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <p><strong>Payment</strong></p>
+                <ol start="1">
+                    <li>
+                        <p>A payment method is integrated for user to pay for the jobs posted</p>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <p><strong>AI Based Candidate Matching</strong></p>
+                <ol start="1">
+                    <li>
+                        <p>User is able to post a job with description, title and location</p>
+                    </li>
+                    <li>
+                        <p>Key skills and roles are extracted from the job description using AI</p>
+                    </li>
+                    <li>
+                        <p>Scrapper is used to search the profiles matching skills, roles and location on linked in
+                            using user cookies</p>
+                    </li>
+                    <li>
+                        <p>Top 50 candidates profile links and names are scrapped</p>
+                    </li>
+                    <li>
+                        <p>Profile data is scrapped for each of the profile</p>
+                    </li>
+                    <li>
+                        <p>all 50 candidates are matched with the job description using AI and are rated out of 100,
+                            weaknesses and strengths</p>
+                    </li>
+                    <li>
+                        <p>Top 20 candidates list is shared with the user</p>
+                    </li>
+                </ol>
+            </li>
+        </ol>
+        <h3>1. AI-Driven Candidate Engagement on LinkedIn</h3>
+        <p><strong>Feature:</strong><br>
+            Implement an AI bot that automatically engages top-ranked candidates on LinkedIn. This bot can check if a
+            candidate is already a connection and, if not, send a personalized connection request.</p>
+        <p><strong>How to Achieve This:</strong></p>
+        <ul>
+            <li>
+                <p><strong>Connection Request Automation:</strong> Integrate with the LinkedIn API to check connection
+                    status and send personalized connection requests using natural language generation (NLG).</p>
+            </li>
+            <li>
+                <p><strong>Personalized Messaging:</strong> Once a connection is established (or if the candidate is
+                    already connected), the bot sends an introduction message outlining the job details and provides the
+                    link to the job posting.</p>
+            </li>
+            <li>
+                <p><strong>Response Analysis:</strong> Use sentiment analysis and natural language processing (NLP) to
+                    analyze responses in real time, determining the level of interest or concerns expressed by the
+                    candidate.</p>
+            </li>
+        </ul>
+        <hr>
+        <h3>2. Automated Scheduling and Response-Driven Outreach</h3>
+        <p><strong>Feature:</strong><br>
+            Integrate an AI-powered scheduler that dynamically responds to candidate interactions. For example, if a
+            candidate shows interest, the system automatically shares a Calendly link to schedule an initial screening
+            call.</p>
+        <p><strong>How to Achieve This:</strong></p>
+        <ul>
+            <li>
+                <p><strong>Calendly Integration:</strong> Build an integration that sends out scheduling links based on
+                    candidate responses.</p>
+            </li>
+            <li>
+                <p><strong>Intelligent Follow-Ups:</strong> Develop an AI system that tailors follow-up messages based
+                    on candidate engagement and previous interactions, ensuring the outreach remains personal and
+                    timely.</p>
+            </li>
+        </ul>
+        <hr>
+        <h3>3. Automated First-Line Screening via Video Interviews</h3>
+        <p><strong>Feature:</strong><br>
+            Introduce a first-line screening module that asks candidates to record a short 1-2 minute video. AI analyzes
+            the video for expressions, tone, and delivery to provide initial insights.</p>
+        <p><strong>How to Achieve This:</strong></p>
+        <ul>
+            <li>
+                <p><strong>Video and Audio Analysis:</strong> Utilize computer vision and audio processing models (such
+                    as emotion recognition algorithms) to analyze facial expressions, body language, and voice tone.</p>
+            </li>
+            <li>
+                <p><strong>Transcript Generation:</strong> Automatically transcribe the video using speech-to-text
+                    technologies and apply NLP to extract key points.</p>
+            </li>
+            </li>
+            <li>
+                <p><strong>Candidate Ranking:</strong> Generate a comprehensive analysis report that includes a matching
+                    score based on both verbal and non-verbal cues, ranking candidates accordingly.</p>
+            </li>
+        </ul>
+        <hr>
+        <h3>4. Automated First Technical Interview with an AI Avatar</h3>
+        <p><strong>Feature:</strong><br>
+            Deploy an AI-powered avatar that can conduct a preliminary technical interview. The avatar interacts with
+            candidates, asking pre-set questions and even allowing follow-up queries in real time.</p>
+        <p><strong>How to Achieve This:</strong></p>
+        <ul>
+            <li>
+                <p><strong>Avatar Integration:</strong> Utilize advanced conversational AI models to create an engaging,
+                    human-like avatar that can simulate an interview environment.</p>
+            </li>
+            <li>
+                <p><strong>Contextual Interviewing:</strong> The AI avatar can ask contextually relevant questions based
+                    on the candidate's resume and the job description, adapting the interview flow dynamically.</p>
+            </li>
+        </ul>
+        <hr>
+        <h3>5. Coding Interview Integration and Automated Technical Assessment</h3>
+        <p><strong>Feature:</strong><br>
+            Integrate with established coding platforms (such as LeetCode or HackerRank) to automatically send coding
+            challenges to candidates. Based on their performance, the system reassesses and ranks them for this stage.
+        </p>
+        <p><strong>How to Achieve This:</strong></p>
+        <ul>
+            <li>
+                <p><strong>API Integration with Coding Platforms:</strong> Connect to coding platforms via their APIs to
+                    dispatch coding challenges and retrieve results.</p>
+            </li>
+            <li>
+                <p><strong>Real-Time Assessment:</strong> Use AI to analyze code submissions, including factors such as
+                    problem-solving approach, code efficiency, and adherence to best practices.</p>
+            </li>
+            <li>
+                <p><strong>Feedback Loop:</strong> Reassess candidates based on technical challenge performance,
+                    integrating this data with earlier stages (video and avatar interviews) to generate a comprehensive
+                    candidate ranking.</p>
+            </li>
+        </ul>
+        <hr>
+        <h3>6. Candidate Feedback</h3>
+        <p><strong>Feature:</strong><br>
+            Introduce a candidate feedback loop. Once the process is complete, ask the candidate to provide feedback
+            about each step. Use the feedback to improve the method based on machine learning.</p>
+        <p><strong>How to Achieve This:</strong></p>
+        <ul>
+            <li>
+                <p><strong>Candidate Feedback:</strong> Collect the feedback in the form of a wizard, where each step in
+                    the wizard corresponds to the steps the candidate went through.</p>
+            </li>
+            <li>
+                <p><strong>Machine Learning:</strong> Use the feedback to provide the improvements in the process.</p>
+            </li>
+            </li>
+            <li>
+                <p><strong>Feedback Loop:</strong> Based on the machine learning recommendations, improve the
+                    interviewing process.</p>
+            </li>
+        </ul>
+        <hr>
+        <h3>7. Customer Feedback</h3>
+        <p><strong>Feature:</strong><br>
+            Introduce a customer feedback loop. Once an application is closed, ask HR for feedback with all the steps
+            similar to candidate feedback.</p>
+        <p><strong>How to Achieve This:</strong></p>
+        <ul>
+            <li>
+                <p><strong>Customer Feedback:</strong> Collect the feedback in the form of a wizard, where each step in
+                    the wizard corresponds to the steps the customer went through.</p>
+            </li>
+            <li>
+                <p><strong>Machine Learning:</strong> Use the feedback to provide the improvements in the process.</p>
+            </li>
+            </li>
+            <li>
+                <p><strong>Feedback Loop:</strong> Based on the machine learning recommendations, improve the
+                    interviewing process.</p>
+            </li>
+        </ul>
+        <hr>
+        <h3>8. Improved Analytics</h3>
+        <p><strong>Feature:</strong><br>
+            Improve the analytics to provide more value to the customer (HR professionals). Following are some of the
+            features that can be introduced.</p>
+        <h3>8.1. Candidate Funnel Analytics</h3>
+        <ul>
+            <li>
+                <p><strong>Stage Conversion Rates:</strong> Track how many candidates move from one stage of the process
+                    to the next (e.g., LinkedIn engagement, connection acceptance, initial screening, technical
+                    assessment).</p>
+            </li>
+            <li>
+                <p><strong>Drop-off Rates:</strong> Identify stages where candidates are most likely to disengage,
+                    helping to optimize messaging or process flow.</p>
+            </li>
+        </ul>
+        <h3>8.2. Engagement and Response Metrics</h3>
+        <ul>
+            <li>
+                <p><strong>Response Rates:</strong> Monitor response rates to connection requests, introductory
+                    messages, and scheduling invites. This can help gauge the effectiveness of your outreach strategies.
+                </p>
+            </li>
+            <li>
+                <p><strong>Time-to-Response:</strong> Measure how long candidates take to respond at each touchpoint,
+                    which can indicate engagement levels and process efficiency.</p>
+            </li>
+        </ul>
+        <h3>8.3. Candidate Quality and Matching Analytics</h3>
+        <ul>
+            <li>
+                <p><strong>Matching Score Distribution:</strong> Analyze the distribution of candidate scores to
+                    understand how well the extracted skills, experiences, and job requirements are aligning.</p>
+            </li>
+            <li>
+                <p><strong>Strengths and Weaknesses Trends:</strong> Use AI-generated insights to spot common trends in
+                    candidate profiles, which may inform adjustments to job descriptions or screening criteria.</p>
+            </li>
+        </ul>
+        <h3>8.4. Interview and Screening Effectiveness</h3>
+        <ul>
+            <li>
+                <p><strong>Video and Audio Analysis Metrics:</strong> Track metrics from automated video interviews
+                    (e.g., sentiment scores, clarity of communication, non-verbal cues) to predict candidate fit.</p>
+            </li>
+            <li>
+                <p><strong>Technical Assessment Outcomes:</strong> Evaluate candidate performance on coding tests or
+                    technical interviews, including pass/fail rates, average scores, and improvement over multiple
+                    assessments.</p>
+            </li>
+        </ul>
+        <h3>8.5. Process Efficiency and Time-to-Hire</h3>
+        <ul>
+            <li>
+                <p><strong>Time Spent Per Stage:</strong> Measure how long candidates spend in each stage of the
+                    process—from initial outreach to final interview—highlighting bottlenecks.</p>
+            </li>
+            <li>
+                <p><strong>Overall Time-to-Hire:</strong> Analyze the complete cycle from candidate engagement to hire,
+                    helping to benchmark and improve process efficiency.</p>
+            </li>
+        </ul>
+        <h3>8.6. Cost and ROI Metrics</h3>
+        <ul>
+            <li>
+                <p><strong>Cost per Hire:</strong> Calculate costs associated with each recruitment stage, including
+                    marketing, platform usage, and human intervention, to assess overall return on investment.</p>
+            </li>
+            <li>
+                <p><strong>Resource Utilization:</strong> Understand how much time and effort is saved through
+                    automation, compared to traditional recruitment methods.</p>
+            </li>
+        </ul>
+        <h3>8.7. Diversity and Inclusion Analytics</h3>
+        <ul>
+            <li>
+                <p><strong>Demographic Distribution:</strong> Track diversity metrics across candidate pools (e.g.,
+                    gender, ethnicity, age) to ensure unbiased hiring practices.</p>
+            </li>
+            <li>
+                <p><strong>Inclusive Engagement:</strong> Analyze how diverse groups interact with the recruitment
+                    process and adjust strategies to improve inclusivity.</p>
+            </li>
+        </ul>
+        <h3>8.8. Predictive and Trend Analytics</h3>
+        <ul>
+            <li>
+                <p><strong>Predictive Hiring Success:</strong> Utilize historical data and
+                    machine learning models to predict which candidates are more likely to succeed, allowing HR to focus
+                    on high-potential individuals.</p>
+            </li>
+            <li>
+                <p><strong>Trend Analysis:</strong> Identify long-term trends in hiring quality, candidate behavior, and
+                    market competitiveness, enabling strategic adjustments in recruitment planning.</p>
+            </li>
+        </ul>
+        <h3>8.9. Candidate Watchlist</h3>
+        <ul>
+            <li>
+                <p><strong>Curated Talent Pool:</strong><br>
+                    HR can mark promising candidates—even if they're not actively applying—as "watchlisted" for future
+                    opportunities. This helps maintain a curated talent pool for immediate or future hiring needs.</p>
+            </li>
+            <li>
+                <p><strong>Real-Time Updates:</strong><br>
+                    Integrate with LinkedIn or other professional platforms to automatically update candidate profiles
+                    on the watchlist. For example, if a candidate adds a new skill, changes job titles, or shows
+                    increased engagement online, the system can flag these updates.</p>
+            </li>
+            <li>
+                <p><strong>Personalized Notifications:</strong><br>
+                    Set up alerts that notify recruiters when significant changes occur with watchlisted candidates,
+                    such as activity spikes or new endorsements, ensuring timely follow-ups.</p>
+            </li>
+        </ul>
+        <h3>8.9.1. Analytics and Insights on the Candidate Watchlist</h3>
+        <ul>
+            <li>
+                <p><strong>Engagement Metrics:</strong><br>
+                    Track how frequently watchlisted candidates engage with communications (e.g., connection requests,
+                    messages) or update their profiles. This helps gauge their current market interest and availability.
+                </p>
+            </li>
+            <li>
+                <p><strong>Conversion Analysis:</strong><br>
+                    Measure how many watchlisted candidates eventually move to active application stages, such as
+                    initial screening or interview rounds. This can help evaluate the effectiveness of maintaining a
+                    watchlist.</p>
+            </li>
+            <li>
+                <p><strong>Quality and Skill Trends:</strong><br>
+                    Analyze the aggregated data of watchlisted candidates to identify trends in skills, experience
+                    levels, and industry movements. This can provide insights into emerging talent areas and inform
+                    future job descriptions.</p>
+            </li>
+            <li>
+                <p><strong>Time-to-Conversion Metrics:</strong><br>
+                    Monitor the average time it takes for candidates on the watchlist to move to the next stage of the
+                    hiring process once they are engaged. This information can help refine outreach strategies.</p>
+            </li>
+        </ul>
+        <h3>8.9.2. Future AI Integrations for the Watchlist</h3>
+        <ul>
+            <li>
+                <p><strong>Predictive Analytics:</strong><br>
+                    Use machine learning models to predict which watchlisted candidates are most likely to be interested
+                    in a new opportunity based on historical data, online behavior, and profile updates.</p>
+            </li>
+            <li>
+                <p><strong>Automated Re-Engagement:</strong><br>
+                    Implement AI-driven personalized messaging that automatically re-engages candidates on the watchlist
+                    when relevant roles become available. This can include sending periodic updates or industry insights
+                    to keep them warm.</p>
+            </li>
+            <li>
+                <p><strong>Behavioral Analysis:</strong><br>
+                    Apply sentiment analysis and behavioral tracking to understand candidate mood and engagement trends
+                    over time. This can help refine communication strategies to increase the chances of conversion.</p>
+            </li>
+            <li>
+                <p><strong>Smart Recommendations:</strong><br>
+                    Incorporate recommendation engines that suggest additional candidates for the watchlist based on
+                    similarities with current top performers or high-conversion watchlist candidates.</p>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>
