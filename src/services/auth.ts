@@ -38,6 +38,7 @@ export const loginUser = async (
 
     return accessToken;
   } catch (error: any) {
+    console.log("error", error);
     throw new Error(error.message);
   }
 };
@@ -93,7 +94,11 @@ export const verifyOtp = async (
     if (!user) {
       throw new Error("User not found");
     }
-    const otpToken = await getUserTokenByType(user.id, TokenType.OTP);
+    const otpToken = await getUserTokenByType({
+      userId: user.id,
+      type: TokenType.OTP,
+      token: otpCode,
+    });
     if (!otpToken) {
       throw new Error("OTP token not found");
     }
@@ -118,7 +123,7 @@ export const logoutUser = async (accessToken: string): Promise<void> => {
   }
 };
 
-const createOtpToken = async (user: User): Promise<string> => {
+export const createOtpToken = async (user: User): Promise<string> => {
   try {
     const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
     await createUserToken({

@@ -106,3 +106,9 @@ export interface PasswordResetProps {
 export interface OtpVerificationProps {
   otpCode: string;
 }
+
+export interface GetUserTokenByTypeProps {
+  userId: string;
+  type: TokenType;
+  token: string;
+}

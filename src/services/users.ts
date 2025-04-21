@@ -3,7 +3,11 @@ import { TokenType, User, UserToken } from "@prisma/client";
 
 // Utils
 import prisma from "../utils/db";
-import { CreateUserData, CreateUserTokenData } from "../utils/types";
+import {
+  CreateUserData,
+  CreateUserTokenData,
+  GetUserTokenByTypeProps,
+} from "../utils/types";
 
 export const getUser = async (id: string): Promise<User> => {
   try {
@@ -84,13 +88,15 @@ export const deleteUserToken = async (token: string): Promise<void> => {
   }
 };
 
-export const getUserTokenByType = async (
-  userId: string,
-  type: TokenType
-): Promise<UserToken | null> => {
+export const getUserTokenByType = async ({
+  userId,
+  type,
+  token,
+}: GetUserTokenByTypeProps): Promise<UserToken | null> => {
   try {
     const userToken = await prisma.userToken.findFirst({
-      where: { userId, type },
+      where: { userId, type, token },
+      orderBy: { expires: "desc" },
     });
     return userToken;
   } catch (error) {

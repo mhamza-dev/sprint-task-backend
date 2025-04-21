@@ -18,26 +18,28 @@ export const sendEmail = async ({
   emailType,
   props,
 }: SendEmailProps): Promise<void> => {
-  const { subject, html } = BaseEmailTemplate({
-    emailType,
-    props,
-  });
-  console.log(process.env.EMAIL_USER);
-  console.log(process.env.EMAIL_PASSWORD);
-  const transporter = nodemailer.createTransport({
-    service: process.env.EMAIL_SERVICE,
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASSWORD,
-    },
-  });
+  try {
+    const { subject, html } = BaseEmailTemplate({
+      emailType,
+      props,
+    });
+    const transporter = nodemailer.createTransport({
+      service: process.env.EMAIL_SERVICE,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
 
-  const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to,
-    subject,
-    html,
-  };
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to,
+      subject,
+      html,
+    };
 
-  await transporter.sendMail(mailOptions);
+    await transporter.sendMail(mailOptions);
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
 };
